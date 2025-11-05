@@ -11,13 +11,13 @@ type Student = {
 };
 
 const students: Student[] = [
-  { name: 'Rajath Bhakta K', imageSrc: '/students/1.jpg', content: 'Incredible support and expert teaching helped me master CMA.', part1Score: 400, part2Score: 390 },
-  { name: 'Deepthi Monteiro', imageSrc: '/students/2.jpg', content: 'NSA coaching boosted my confidence and career opportunities.', part1Score: 440, part2Score: 390 },
-  { name: 'Divya R', imageSrc: '/students/3.jpg', content: 'Engaging sessions sparked my passion for strategic finance.', part1Score: 430, part2Score: 400 },
+  { name: 'Rajath Bhakta K', imageSrc: '/students/1.avif', content: 'Incredible support and expert teaching helped me master CMA.', part1Score: 400, part2Score: 390 },
+  { name: 'Deepthi Monteiro', imageSrc: '/students/2.avif', content: 'NSA coaching boosted my confidence and career opportunities.', part1Score: 440, part2Score: 390 },
+  { name: 'Divya R', imageSrc: '/students/3.avif', content: 'Engaging sessions sparked my passion for strategic finance.', part1Score: 430, part2Score: 400 },
   { name: 'Yashika Goyal', imageSrc: '/students/4.jpeg', content: 'Guidance helped me overcome challenges and excel in exams.', part1Score: 430, part2Score: 400 },
-  { name: 'Jenil Parikh', imageSrc: '/students/3.jpg', content: 'Interactive coaching ensured mastery and steady progress.', part1Score: 410, part2Score: 430 },
-  { name: 'Shiny Mascarenhas', imageSrc: '/students/2.jpg', content: 'Support and expert teaching helped me reach my goals.', part1Score: 400, part2Score: 400 },
-  { name: 'Jaysri Duraisamy', imageSrc: '/students/1.jpg', content: 'NSA coaching helped me clear challenges with confidence.', part1Score: 440, part2Score: 400 },
+  { name: 'Jenil Parikh', imageSrc: '/students/3.avif', content: 'Interactive coaching ensured mastery and steady progress.', part1Score: 410, part2Score: 430 },
+  { name: 'Shiny Mascarenhas', imageSrc: '/students/2.avif', content: 'Support and expert teaching helped me reach my goals.', part1Score: 400, part2Score: 400 },
+  { name: 'Jaysri Duraisamy', imageSrc: '/students/1.avif', content: 'NSA coaching helped me clear challenges with confidence.', part1Score: 440, part2Score: 400 },
   { name: 'Savijit Singh', imageSrc: '/students/4.jpeg', content: 'Training empowered my success and impact at work.', part1Score: 410, part2Score: 400 },
 ];
 

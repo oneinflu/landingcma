@@ -35,10 +35,10 @@ export default function CMAHero() {
   ];
 
   const studentAvatars = [
-    '/students/1.jpg',
-    '/students/2.jpg',
-    '/students/3.jpg',
-    '/students/4.jpeg',
+    '/students/1.avif',
+    '/students/2.avif',
+    '/students/3.avif',
+    '/students/4.avif',
   ];
 
   return (
