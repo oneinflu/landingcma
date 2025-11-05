@@ -22,12 +22,12 @@
 /* Marquee utility classes for continuous, smooth loop */
 .marquee {
   will-change: transform;
-  animation: scroll 18s linear infinite;
+  animation: scroll 10s linear infinite;
 }
 
 .marquee-rtl {
   will-change: transform;
-  animation: scroll-reverse 18s linear infinite;
+  animation: scroll-reverse 10s linear infinite;
 }
 
 .marquee:hover,
@@ -345,4 +345,12 @@ body {
 
 .animate-scroll {
   animation: var(--animate-scroll);
+}
+
+/* Mobile: allow manual horizontal scroll; disable marquee animation */
+@media (max-width: 768px) {
+  .marquee,
+  .marquee-rtl {
+    animation: none;
+  }
 }

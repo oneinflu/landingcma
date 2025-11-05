@@ -205,12 +205,18 @@ const LeadFormModal = () => {
   }, [isOpen, updateFormData]);
 
   useEffect(() => {
-    if (inputRef.current) {
+    // Initialize Google Places Autocomplete only when the script is ready
+    if (
+      inputRef.current &&
+      typeof google !== "undefined" &&
+      google.maps?.places?.Autocomplete
+    ) {
       const autocompleteInstance = new google.maps.places.Autocomplete(
         inputRef.current,
         {
           types: ["(cities)"],
           componentRestrictions: { country: "in" },
+          fields: ["formatted_address", "address_components", "geometry"],
         }
       );
       setAutocomplete(autocompleteInstance);
@@ -338,7 +344,22 @@ const LeadFormModal = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("OTP verification success:", result);
-        router.push("/thank-you");
+        // Navigate to thank-you page; add a hard redirect fallback
+        try {
+          const initialPath = typeof window !== 'undefined' ? window.location.pathname : '';
+          router.push("/thank-you");
+          if (typeof window !== 'undefined') {
+            setTimeout(() => {
+              if (window.location.pathname === initialPath) {
+                window.location.assign('/thank-you');
+              }
+            }, 800);
+          }
+        } catch {
+          if (typeof window !== 'undefined') {
+            window.location.assign('/thank-you');
+          }
+        }
       } else {
         const errorData = await response.json();
         console.error("OTP verification failed:", response.status, errorData);
@@ -432,9 +453,19 @@ const LeadFormModal = () => {
           onClick={closeLeadForm}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-auto overflow-hidden"
+            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-auto overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close button */}
+            <button
+              onClick={closeLeadForm}
+              aria-label="Close"
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 focus:outline-none"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Left side - Branding and Info (hidden on mobile) */}
               <div className="hidden md:block bg-gradient-to-br from-red-700 to-red-900 p-8 text-white">

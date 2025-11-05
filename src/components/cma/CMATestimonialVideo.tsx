@@ -105,7 +105,7 @@ const Card = ({ item }: { item: Story }) => {
   // Video-only card: render only video, no text or icons
   if (item.type === 'video') {
     return (
-      <div className={`${CARD_WIDTH} ${CARD_HEIGHT} flex-shrink-0`}>
+      <div className={`${CARD_WIDTH} ${CARD_HEIGHT} flex-shrink-0 snap-start`}>
         <div className="rounded-2xl overflow-hidden h-full bg-black relative group">
           <video
             ref={videoRef}
@@ -134,7 +134,7 @@ const Card = ({ item }: { item: Story }) => {
 
   // Testimonial card
   return (
-    <div className={`${CARD_WIDTH} ${CARD_HEIGHT} flex-shrink-0`}>
+    <div className={`${CARD_WIDTH} ${CARD_HEIGHT} flex-shrink-0 snap-start`}>
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden h-full flex flex-col">
         {/* Text area */}
         <div className="px-5 pt-5 flex-1">
@@ -163,10 +163,40 @@ const Card = ({ item }: { item: Story }) => {
 };
 
 const AutoRow = ({ items, delay = 0, direction = 'ltr' }: { items: Story[]; delay?: number; direction?: 'ltr' | 'rtl' }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const innerRef = useRef<HTMLDivElement | null>(null);
+
+  // Auto-scroll on mobile when marquee is disabled
+  useEffect(() => {
+    const container = containerRef.current;
+    const inner = innerRef.current;
+    if (!container) return;
+    const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+    if (!isMobile) return;
+
+    const step = () => {
+      if (!container || !inner) return;
+      const firstCard = inner.children[0] as HTMLElement | undefined;
+      const gap = parseFloat(getComputedStyle(inner).columnGap || '0');
+      const cardWidth = firstCard ? firstCard.offsetWidth : 288; // fallback ~ w-72
+      const delta = cardWidth + gap;
+      const maxScroll = inner.scrollWidth - container.clientWidth;
+      const next = container.scrollLeft + delta;
+      container.scrollTo({ left: next > maxScroll ? 0 : next, behavior: 'smooth' });
+    };
+
+    const id = window.setInterval(step, 3000);
+    return () => window.clearInterval(id);
+  }, []);
+
   return (
-    <div className="relative overflow-hidden">
+    <div
+      ref={containerRef}
+      className="relative overflow-x-auto md:overflow-hidden snap-x snap-mandatory scroll-smooth"
+    >
       <div
-        className={`flex space-x-6 ${direction === 'rtl' ? 'marquee-rtl' : 'marquee'}`}
+        ref={innerRef}
+        className={`flex space-x-6 min-w-max ${direction === 'rtl' ? 'marquee-rtl' : 'marquee'}`}
         style={{ animationDelay: `${delay}s` }}
       >
         {[...items, ...items].map((it, idx) => (
